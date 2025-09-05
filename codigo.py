@@ -24,7 +24,7 @@ tarifas = {
     "moto": 1000,     # Valor por hora para motos
     "carro": 2000,    # Valor por hora para carros
     "camioneta": 2500 # Valor por hora para camionetas
-}
+}#ademas cabe aclarar que si el vehiculos se queda 30 minutos, se le cobrara una hora completa
 # Diccionario que permite calcular el valor a pagar según el tipo de vehículo.
 
 opc = 0  
@@ -34,7 +34,7 @@ opc = 0
 # 3. Bucle principal del sistema
 
 while opc != 5:  
-    # Este bucle se ejecuta mientras el usuario NO seleccione la opción 5 (Salir)
+    # Este bucle se ejecuta mientras el usuario NO seleccione la opción 5 (Salir) si presiona el 5 el bucle se repitira
     
     print("----------Parking Center S.A.S.----------")
     # Imprime el encabezado del sistema
@@ -59,17 +59,17 @@ while opc != 5:
         placa = input("Ingresar placa: ")  
         # Solicitamos la placa del vehículo que desea ingresar
         
-        # Verificamos que la placa no esté ya registrada
-        j = 0  # Inicializamos un contador para recorrer la lista de vehículos
+        # Verificamos que la placa no esté ya registrada con este bucle:
+        j = 0  # Inicializamos un contador para recorrer la lista de vehículos,donde J es el indice que cambiara de tupla
         while j < len(vehiculos):  
-            # Recorremos la lista de vehículos activos usando un índice j
+            # Recorremos la lista de vehículos activos usando un índice j,mientras que j sea menor a la cantidad de vehiculos,ya que si j es mayor a la lista de vehiculos,estara reccoriendo tuplas de vehiculos que no existen
             if vehiculos[j][0] == placa:  
-                # Si la placa ya existe (vehiculos[j][0] accede a la placa)
+                # Si la placa ya existe (vehiculos[j][0] accede a la placa) imprimira: 
                 print("Error: Un vehículo con esta placa ya está en el parqueadero.")
                 placa = input("Ingresar otra placa: ")  
                 # Solicitamos nuevamente la placa
                 j = -1  
-                # Reiniciamos j a -1 porque al final del ciclo se hace j += 1
+                # Reiniciamos j a -1 porque al final del ciclo se hace j += 1 para que no recorra la misma placa
                 # Esto permite volver a recorrer toda la lista desde el inicio
             j += 1  
             # Incrementamos j en 1 para pasar al siguiente vehículo en la lista
@@ -115,24 +115,25 @@ Tipos de vehículos:
 
         j = 0  # Inicializamos un contador para recorrer la lista de vehículos
         encontrado = False  
-        # Bandera que nos indica si encontramos la placa en la lista de vehículos
+        # Bandera que nos indica si encontramos la placa en la lista de vehículos,en este caso False,para que lo confirme y tengamos esa señalizacion
 
         while j < len(vehiculos):
             if vehiculos[j][0] == placa_salida:  
-                # Comprobamos si la placa ingresada coincide con la placa del vehículo en la posición j
-                encontrado = True
+                # Comprobamos si la placa ingresada coincide con la placa del vehículo en la posición j (el indice de la tupla que accede al valor de la placa)
+                encontrado = True # Si es verdadera,la bandera sera True
                 placa, tipo, hora_entrada = vehiculos[j]  
                 # Desempaquetamos la tupla para obtener placa, tipo y hora de entrada
+                # Donde el primer valor lo desempaquetamos como placa,tipo como tipo,hora de entrada como hora entrada de la tupla del carro indice(j)
 
                 hora_salida = datetime.now()  
-                # Obtenemos la hora exacta de salida
+                # Obtenemos la hora exacta de salida con la funcion now que agarra la hora exacta
 
                 duracion = hora_salida - hora_entrada  
                 # Calculamos el tiempo que el vehículo estuvo estacionado
                 # El resultado es un objeto timedelta
 
                 horas = duracion.total_seconds() / 3600  
-                # Convertimos la duración de segundos a horas decimales
+                # Convertimos la duración de segundos a horas decimales con el metodo total.seconds que convierte a decimales,las horas minutos segundos
 
                 horas = int(horas) + 1  
                 # Redondeamos hacia arriba al siguiente número entero
@@ -171,7 +172,7 @@ Tipos de vehículos:
     # OPCIÓN 3 - Consultar parqueadero actual
 
     elif opc == 3:
-        if vehiculos != []:  
+        if vehiculos != []:  # Si la lista no esta vacia se hace el la condicion e inicia el bucle
             # Verificamos si hay vehículos en el parqueadero
             print("\n--- Vehículos en el parqueadero ---")
             j = 0
@@ -182,7 +183,7 @@ Tipos de vehículos:
                 print(f"Placa: {placa} | Tipo: {tipo} | Hora entrada: {hora_entrada.strftime('%H:%M:%S')}")
                 j += 1  # Incrementamos j para pasar al siguiente vehículo en la lista
             print()
-        else:
+        else: # Si no se cumple,y esta vacia,ose muestra:
             # Si no hay vehículos, mostramos un mensaje
             print("No hay vehículos en el parqueadero.\n")
 
@@ -191,12 +192,12 @@ Tipos de vehículos:
 
     elif opc == 4:
         total = 0  # Inicializamos la variable acumuladora
-        j = 0
-        while j < len(historial):  
+        j = 0 # Inicializamos el contador del indice para pasar a los vehiculos
+        while j < len(historial):  # Mientras el indice j sea menor a todas las tuplas de vehiculos se recorre,ya que si es mayor a la lista,estaria buscando tuplas inexistentes
             # Recorremos toda la lista historial
             total += historial[j][4]  
-            # Sumamos el valor pagado (índice 4 de cada tupla)
-            j += 1  # Incrementamos j para pasar al siguiente elemento
+            # Sumamos el valor pagado (índice 4 de cada tupla que es valor que lo hicimos y agregamos a cada tupla en la opcion 4)
+            j += 1  # Incrementamos j para pasar al siguiente elemento osea vehiculo
         print(f"\nTotal recaudado: ${total}\n")  # Mostramos el total acumulado
 
 
@@ -204,12 +205,12 @@ Tipos de vehículos:
 
     elif opc == 5:
         print("Saliendo del sistema...")
-        break  # Rompemos el bucle principal y terminamos el programa
+     # Rompemos el bucle principal y terminamos el programa
 
     # Opción inválida
 
     else:
-        print("Opción no válida. Intente de nuevo.\n")
+        print("Opción no válida. Intente de nuevo.\n") 
 
 
  
